@@ -2735,7 +2735,12 @@ typedef NS_ENUM(NSUInteger, YYTextMoveDirection) {
         [self _endTouchTracking];
     }
     
-    if (!_state.swallowTouch) [super touchesEnded:touches withEvent:event];
+    if (!_state.swallowTouch){
+        if([self.delegate respondsToSelector:@selector(textViewDidTapNoneResponseString:)]){
+            [self.delegate textViewDidTapNoneResponseString:self];
+        }
+        [super touchesEnded:touches withEvent:event];
+    }
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
