@@ -15,6 +15,7 @@
 #import "NSAttributedString+YYText.h"
 #import "YYTextArchiver.h"
 
+NSString *YYTextAttachmentKeyWillLayoutContent = @"WillLayout";
 
 static double _YYDeviceSystemVersion() {
     static double version;

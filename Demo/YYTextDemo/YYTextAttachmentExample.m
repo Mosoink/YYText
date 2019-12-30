@@ -8,13 +8,14 @@
 
 #import "YYTextAttachmentExample.h"
 #import "YYText.h"
-#import "YYImage.h"
-#import "UIImage+YYWebImage.h"
+#import <YYWebImage/YYImage.h>
+#import <YYWebImage/UIImage+YYWebImage.h>
 #import "UIView+YYAdd.h"
 #import "NSBundle+YYAdd.h"
 #import "NSString+YYAdd.h"
 #import "YYTextExampleHelper.h"
 #import "YYGestureRecognizer.h"
+#import "MSTAttributedStringYY.h"
 
 @interface YYTextAttachmentExample ()<UIGestureRecognizerDelegate>
 @property (nonatomic, strong) YYLabel *label;
@@ -26,7 +27,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [YYTextExampleHelper addDebugOptionToViewController:self];
 
-    
+    /*
     NSMutableAttributedString *text = [NSMutableAttributedString new];
     UIFont *font = [UIFont systemFontOfSize:16];
     
@@ -83,16 +84,17 @@
     }
     
     
-    
-    text.yy_font = font;
-    
+    */
     _label = [YYLabel new];
     _label.userInteractionEnabled = YES;
     _label.numberOfLines = 0;
     _label.textVerticalAlignment = YYTextVerticalAlignmentTop;
-    _label.size = CGSizeMake(260, 260);
-    _label.center = CGPointMake(self.view.width / 2, self.view.height / 2);
-    _label.attributedText = text;
+//    _label.size = CGSizeMake(260, 260);
+//    _label.center = CGPointMake(self.view.width / 2, self.view.height / 2);
+    _label.textLayout = [MSTAttributedStringYY textLayoutFromHTML:nil size:CGSizeMake(self.view.width, CGFLOAT_MAX)];
+    _label.frame = CGRectMake(0, (self.view.height - _label.textLayout.textBoundingSize.height) / 2., _label.textLayout.textBoundingSize.width, _label.textLayout.textBoundingSize.height);
+    _label.backgroundColor = [UIColor lightGrayColor];
+    
     [self addSeeMoreButton];
     [self.view addSubview:_label];
     

@@ -269,6 +269,8 @@ typedef void(^YYTextAction)(UIView *containerView, NSAttributedString *text, NSR
  then it will be drawn to CGContext; if the content is `UIView` or `CALayer`, 
  then it will be added to the text container's view or layer.
  */
+
+
 @interface YYTextAttachment : NSObject<NSCoding, NSCopying>
 + (instancetype)attachmentWithContent:(nullable id)content;
 @property (nullable, nonatomic, strong) id content;             ///< Supported type: UIImage, UIView, CALayer
@@ -277,6 +279,8 @@ typedef void(^YYTextAction)(UIView *containerView, NSAttributedString *text, NSR
 @property (nullable, nonatomic, strong) NSDictionary *userInfo; ///< The user information dictionary.
 @end
 
+typedef void(^YYTextAttachmentWillLayoutContent)(YYTextAttachment *attachment);
+FOUNDATION_EXTERN NSString *YYTextAttachmentKeyWillLayoutContent;
 
 /**
  YYTextHighlight objects are used by the NSAttributedString class cluster

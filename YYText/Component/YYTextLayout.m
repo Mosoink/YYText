@@ -3010,6 +3010,10 @@ static void YYTextDrawAttachment(YYTextLayout *layout, CGContextRef context, CGS
             layer.frame = rect;
             [targetLayer addSublayer:layer];
         }
+        YYTextAttachmentWillLayoutContent willLayout = [a.userInfo valueForKey:YYTextAttachmentKeyWillLayoutContent];
+        if (willLayout) {
+            willLayout(a);
+        }
     }
 }
 

@@ -578,11 +578,29 @@ return style. _attr_;
                                                attachmentSize:(CGSize)attachmentSize
                                                   alignToFont:(UIFont *)font
                                                     alignment:(YYTextVerticalAlignment)alignment {
+    return [self yy_attachmentStringWithContent:content contentMode:contentMode attachmentSize:attachmentSize alignToFont:font alignment:alignment userInfo:nil];
+}
+
++ (NSMutableAttributedString *)yy_attachmentStringWithContent:(id)content
+                                                  contentMode:(UIViewContentMode)contentMode
+                                               attachmentSize:(CGSize)attachmentSize
+                                                  alignToFont:(UIFont *)font
+                                                    alignment:(YYTextVerticalAlignment)alignment
+                                                     userInfo:(NSDictionary *)userInfo {
     NSMutableAttributedString *atr = [[NSMutableAttributedString alloc] initWithString:YYTextAttachmentToken];
     
     YYTextAttachment *attach = [YYTextAttachment new];
     attach.content = content;
     attach.contentMode = contentMode;
+    if (userInfo) {
+        if (attach.userInfo) {
+            NSMutableDictionary *p = [attach.userInfo mutableCopy];
+            [p addEntriesFromDictionary:userInfo];
+            attach.userInfo = p;
+        } else {
+            attach.userInfo = userInfo;
+        }
+    }
     [atr yy_setTextAttachment:attach range:NSMakeRange(0, atr.length)];
     
     YYTextRunDelegate *delegate = [YYTextRunDelegate new];
